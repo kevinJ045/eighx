@@ -1,0 +1,6 @@
+[package]
+name = "eighx-bindgen"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

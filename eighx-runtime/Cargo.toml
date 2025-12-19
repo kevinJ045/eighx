@@ -1,0 +1,6 @@
+[package]
+name = "eighx-runtime"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

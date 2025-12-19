@@ -1,7 +1,7 @@
 [workspace]
-members = [
+members = ["eighx-assets", "eighx-bindgen",
 	"eighx-cli"
-]
+, "eighx-editor", "eighx-fft", "eighx-network", "eighx-runtime", "eighx-script", "eighx-ui"]
 resolver = "2"
 
 [workspace.package]

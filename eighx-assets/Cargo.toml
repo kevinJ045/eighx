@@ -1,0 +1,6 @@
+[package]
+name = "eighx-assets"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

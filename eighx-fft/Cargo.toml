@@ -1,0 +1,6 @@
+[package]
+name = "eighx-fft"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

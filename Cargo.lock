@@ -3,5 +3,37 @@
 version = 4
 
 [[package]]
+name = "eighx-assets"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-bindgen"
+version = "0.1.0"
+
+[[package]]
 name = "eighx-cli"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-editor"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-fft"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-network"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-runtime"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-script"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-ui"
 version = "0.1.0"
