@@ -3,6 +3,10 @@
 version = 4
 
 [[package]]
+name = "eighx-app"
+version = "0.1.0"
+
+[[package]]
 name = "eighx-assets"
 version = "0.1.0"
 
@@ -12,6 +16,10 @@ version = "0.1.0"
 
 [[package]]
 name = "eighx-cli"
+version = "0.1.0"
+
+[[package]]
+name = "eighx-core"
 version = "0.1.0"
 
 [[package]]

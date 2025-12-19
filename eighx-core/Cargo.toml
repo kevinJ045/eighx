@@ -1,5 +1,5 @@
 [package]
-name = "eighx-cli"
+name = "eighx-core"
 version.workspace = true
 edition.workspace = true
 
