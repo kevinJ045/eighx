@@ -2,5 +2,11 @@
 name = "eighx-app"
 version.workspace = true
 edition.workspace = true
+publish = false
 
 [dependencies]
+eighx-ui = { path = "../eighx-ui" }
+
+[[bin]]
+name = "eighx"
+path = "src/main.rs"
