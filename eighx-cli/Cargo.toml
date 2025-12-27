@@ -3,4 +3,7 @@ name = "eighx-cli"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/cli.rs"
+
 [dependencies]

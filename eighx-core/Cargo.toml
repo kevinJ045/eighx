@@ -3,4 +3,7 @@ name = "eighx-core"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/core.rs"
+
 [dependencies]

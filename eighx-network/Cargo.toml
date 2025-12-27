@@ -3,4 +3,7 @@ name = "eighx-network"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/networking.rs"
+
 [dependencies]

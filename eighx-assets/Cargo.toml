@@ -3,4 +3,7 @@ name = "eighx-assets"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/assets.rs"
+
 [dependencies]

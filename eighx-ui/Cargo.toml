@@ -3,9 +3,14 @@ name = "eighx-ui"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/ui.rs"
+
 [dependencies]
-gpui.workspace = true
+slint.workspace = true
 anyhow.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-eighx-ui-macros = { path = "../eighx-ui-macros" }
+
+[build-dependencies]
+slint-build = "1.14"

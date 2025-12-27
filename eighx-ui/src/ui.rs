@@ -1,11 +1,8 @@
-pub use eighx_ui_macros::renderable;
-
-pub mod simple;
 pub mod state;
-pub mod theme;
+pub mod window;
 
 pub mod widgets;
-pub use theme::*;
+pub use widgets::{Colors as ThemeColors, Styles as ThemeStyles, Theme};
 
 #[cfg(test)]
 mod tests {
@@ -13,6 +10,6 @@ mod tests {
 
   #[test]
   fn it_works() {
-    simple::render();
+    window::launch();
   }
 }

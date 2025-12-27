@@ -1,7 +1,7 @@
 [workspace]
 members = ["eighx-app","eighx-assets", "eighx-bindgen",
 	"eighx-cli"
-, "eighx-config", "eighx-core", "eighx-editor", "eighx-extensions", "eighx-fft", "eighx-network", "eighx-runtime", "eighx-script", "eighx-ui", "eighx-ui-macros", "eighx-webui"]
+, "eighx-config", "eighx-core", "eighx-editor", "eighx-extensions", "eighx-fft", "eighx-network", "eighx-runtime", "eighx-script", "eighx-ui", "eighx-webui"]
 resolver = "2"
 
 [workspace.package]
@@ -10,7 +10,8 @@ edition = "2024"
 
 [workspace.dependencies]
 # gpui = "0.2.2"
-slint = "1.14"
+slint = { version = "1.14", features = ["serde"] }
 anyhow = "1.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0"
+tokio = { version = "1.32", features = ["full"] }

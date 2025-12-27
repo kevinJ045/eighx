@@ -3,4 +3,7 @@ name = "eighx-script"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/script.rs"
+
 [dependencies]

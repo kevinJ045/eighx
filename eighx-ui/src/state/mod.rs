@@ -1,4 +1,8 @@
-mod theme;
-pub use theme::ThemeState;
+// use serde::{Deserialize, Serialize};
+// use slint::ComponentHandle;
 
-pub fn init_state() {}
+// use crate::{Theme, ThemeColors};
+
+pub fn init_state<'app>(_app: &'app crate::widgets::AppWindow) {
+  // app.global::<Theme>().set_styles(ThemeColors);
+}

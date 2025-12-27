@@ -6,6 +6,8 @@ publish = false
 
 [dependencies]
 eighx-ui = { path = "../eighx-ui" }
+anyhow.workspace = true
+tokio.workspace = true
 
 [[bin]]
 name = "eighx"

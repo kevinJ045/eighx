@@ -3,4 +3,7 @@ name = "eighx-runtime"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/runtime.rs"
+
 [dependencies]

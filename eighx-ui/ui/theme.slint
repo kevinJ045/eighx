@@ -1,0 +1,83 @@
+
+@rust-attr(derive(serde::Serialize, serde::Deserialize))
+export struct Colors {
+  base: color,
+  crust: color,
+  mantle: color,
+  surface: color,
+  surface_lighten: color,
+  surface_darken: color,
+  overlay: color,
+  overlay_lighten: color,
+  overlay_darken: color,
+  text: color,
+  text_darken: color,
+  text_dark: color,
+  text_inverse: color,
+  text_primary: color,
+  primary: color,
+  secondary: color,
+  tertiary: color,
+  error: color,
+  success: color,
+  warn: color,
+  info: color,
+}
+
+export struct BorderStyle {
+  width: length,
+  color: color,
+}
+
+export struct BlockStyle {
+  border: BorderStyle,
+}
+
+export struct SidebarStyle {
+  border: BorderStyle,
+}
+
+export struct Styles {
+  block: BlockStyle,
+  sidebar: SidebarStyle,
+}
+
+export global Theme {
+  in-out property<Colors> colors: {
+    base: #1e1e2eff,
+    crust: #181825ff,
+    mantle: #11111bff,
+    surface: #45475aff,
+    surface_lighten: #585b70ff,
+    surface_darken: #313244ff,
+    overlay: #7f849cff,
+    overlay_lighten: #9399b2ff,
+    overlay_darken: #6c7086ff,
+    text: #cdd6f4ff,
+    text_darken: #bac2deff,
+    text_dark: #a6adc8ff,
+    text_inverse: #cba6f7ff,
+    text_primary: #585b70ff,
+    primary: #cba6f7ff,
+    secondary: #eba0acff,
+    tertiary: #89dcebff,
+    error: #f38ba8ff,
+    success: #a6e3a1ff,
+    warn: #f9e2afff,
+    info: #89b4faff,
+  };
+  in-out property<Styles> styles: {
+    block: {
+      border: {
+        width: 2px,
+        color: #45475a,
+      }
+    },
+    sidebar: {
+      border: {
+        width: 1px,
+        color: #313244,
+      }
+    }
+  };
+}

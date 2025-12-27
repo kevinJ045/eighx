@@ -1,0 +1,241 @@
+
+import { Theme, Colors, Styles } from "./theme.slint";
+// Note: I'm using Theme.colors.[property] as requested.
+
+import { HorizontalBox } from "std-widgets.slint";
+
+component InspectorField {
+    in property <string> label;
+    in property <string> value;
+    HorizontalLayout {
+        spacing: 5px;
+        Text {
+            text: label;
+            color: Theme.colors.text_darken;
+            width: 20px;
+            vertical-alignment: center;
+        }
+        Rectangle {
+            background: Theme.colors.surface;
+            border-radius: 2px;
+            height: 24px;
+            HorizontalLayout {
+                padding-left: 5px;
+                TextInput {
+                    text: value;
+                    color: Theme.colors.text;
+                    vertical-alignment: center;
+                }
+            }
+        }
+    }
+}
+
+component IconButton {
+    in property <string> icon_text;
+    Rectangle {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        background: touch.has-hover ? Theme.colors.surface_lighten : transparent;
+        Text {
+            text: icon_text;
+            color: touch.has-hover ? Theme.colors.primary : Theme.colors.text_darken;
+            font-size: 18px;
+        }
+        touch := TouchArea { mouse-cursor: pointer; }
+    }
+}
+
+component TabLink {
+    in property <string> tab;
+    in-out property <string> current-tab;
+    in property <string> text;
+    callback clicked();
+
+    Rectangle {
+        background: touch.has-hover ? Theme.colors.surface : transparent;
+        border-radius: 4px;
+        height: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        Text {
+            text: root.text;
+            color: root.current-tab == root.tab ? Theme.colors.primary : (touch.has-hover ? Theme.colors.text : Theme.colors.text_darken);
+            vertical-alignment: center;
+            horizontal-alignment: center;
+        }
+
+        touch := TouchArea {
+            mouse-cursor: pointer;
+            clicked => {
+                root.current-tab = root.tab;
+                root.clicked();
+            }
+        }
+    }
+}
+
+component Navbar inherits Rectangle {
+    in-out property<string> tab <=> links.tab;
+    height: 40px;
+    background: Theme.colors.mantle;
+
+    links := HorizontalLayout {
+        padding-left: 15px;
+        padding-right: 15px;
+        spacing: 20px;
+        property <string> tab: "editor";
+
+        HorizontalLayout {
+            spacing: 15px;
+            TabLink { text: "Scene"; current-tab <=> tab; tab: "scene"; }
+            TabLink { text: "Editor"; current-tab <=> tab; tab: "editor"; }
+            TabLink { text: "Profiler+"; current-tab <=> tab; tab: "profiler"; }
+        }
+
+        Rectangle { horizontal-stretch: 1; } // Dynamic Spacer
+
+        HorizontalLayout {
+            alignment: end;
+            spacing: 15px;
+            Text { text: "▶"; color: Theme.colors.success; vertical-alignment: center; }
+            Text { text: "Ⅱ"; color: Theme.colors.info; vertical-alignment: center; }
+            Text { text: "■"; color: Theme.colors.error; vertical-alignment: center; }
+        }
+
+        Rectangle { horizontal-stretch: 1; } // Dynamic Spacer
+    }
+}
+
+component Sidebar inherits HorizontalLayout {
+
+    // Fixed width icon rail
+    Rectangle {
+        width: 50px;
+        background: Theme.colors.crust;
+        VerticalLayout {
+            padding: 5px;
+            spacing: 10px;
+            IconButton { icon_text: "◫"; }
+            IconButton { icon_text: "☰"; }
+            IconButton { icon_text: "📁"; }
+            Rectangle { vertical-stretch: 1; }
+            IconButton { icon_text: "⚙"; }
+        }
+    }
+
+    // Semi-flexible Hierarchy panel
+    Rectangle {
+        width: 200px;
+        background: Theme.colors.mantle;
+        border-width: 1px;
+        border-color: Theme.colors.surface;
+        VerticalLayout {
+            padding: 10px;
+            Text { text: "HIERARCHY"; color: Theme.colors.text_darken; font-size: 11px; font-weight: 700; }
+            VerticalLayout {
+                padding-top: 10px;
+                spacing: 5px;
+                Text { text: "▼ MainScene"; color: Theme.colors.text; }
+                Text { text: "    ♦ Main Camera"; color: Theme.colors.primary; }
+                Text { text: "    ♦ Directional Light"; color: Theme.colors.primary; }
+            }
+            Rectangle { vertical-stretch: 1; }
+        }
+    }
+}
+
+component Editor inherits VerticalLayout {
+    // This is the core "flexible" component
+    horizontal-stretch: 1;
+    vertical-stretch: 1;
+    preferred-height: 300px;
+
+    Navbar {}
+
+    Rectangle {
+        background: Theme.colors.base;
+        horizontal-stretch: 1;
+        vertical-stretch: 1;
+        Text {
+            padding: 20px;
+            text: "use engine::prelude::*;\n\n#[derive(Component)]\npub struct Player {\n    speed: f32,\n}";
+            color: Theme.colors.text;
+            font-family: "Consolas";
+        }
+    }
+
+    // Asset Panel
+    Rectangle {
+        height: 180px;
+        background: Theme.colors.mantle;
+        // border-top-width: 1px;
+        border-color: Theme.colors.surface;
+        VerticalLayout {
+            padding: 10px;
+            Text { text: "PROJECT ASSETS"; color: Theme.colors.secondary; }
+            HorizontalBox {
+                alignment: start;
+                padding-top: 10px;
+                spacing: 10px;
+                for i in 4: Rectangle {
+                    width: 80px; height: 80px;
+                    background: Theme.colors.surface;
+                    border-radius: 4px;
+                }
+            }
+            Rectangle { vertical-stretch: 1; }
+        }
+    }
+}
+
+component Inspector inherits Rectangle {
+    preferred-width: 280px;
+    background: Theme.colors.mantle;
+    // border-left-width: 1px;
+    border-color: Theme.colors.surface;
+    VerticalLayout {
+        padding: 15px;
+        spacing: 15px;
+        Text { text: "〓 TRANSFORM"; color: Theme.colors.primary; font-size: 12px; }
+        InspectorField { label: "X"; value: "0.00"; }
+        InspectorField { label: "Y"; value: "0.00"; }
+        InspectorField { label: "Z"; value: "0.00"; }
+        Rectangle { vertical-stretch: 1; }
+    }
+}
+
+export component AppWindow inherits Window {
+    background: Theme.colors.base;
+    title: "Eighx";
+    preferred-width: 1200px;
+    preferred-height: 800px;
+    min-width: 800px;
+    min-height: 600px;
+
+    VerticalLayout {
+        // Main Body (Sidebar + Editor + Inspector)
+        HorizontalLayout {
+            vertical-stretch: 1;
+            Sidebar {}
+            Editor {}
+            Inspector {}
+        }
+
+        // Bottom Status Bar
+        Rectangle {
+            height: 25px;
+            background: Theme.colors.crust;
+            HorizontalLayout {
+                padding-left: 10px; padding-right: 10px;
+                Text { text: "● Ready"; color: Theme.colors.success; vertical-alignment: center; font-size: 11px; }
+                Rectangle { horizontal-stretch: 1; }
+                Text { text: "Rust 1.80.0"; color: Theme.colors.text_darken; vertical-alignment: center; font-size: 11px; }
+            }
+        }
+    }
+}
+
+export { Theme, Colors, Styles }

@@ -3,5 +3,8 @@ name = "eighx-config"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/config.rs"
+
 [dependencies]
 serde.workspace = true

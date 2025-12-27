@@ -3,4 +3,7 @@ name = "eighx-editor"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/editor.rs"
+
 [dependencies]

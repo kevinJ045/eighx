@@ -3,4 +3,7 @@ name = "eighx-extensions"
 version.workspace = true
 edition.workspace = true
 
+[lib]
+path = "src/extensions.rs"
+
 [dependencies]
