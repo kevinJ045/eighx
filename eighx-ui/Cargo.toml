@@ -8,3 +8,4 @@ gpui.workspace = true
 anyhow.workspace = true
 serde.workspace = true
 serde_json.workspace = true
+eighx-ui-macros = { path = "../eighx-ui-macros" }

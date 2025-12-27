@@ -1,0 +1,6 @@
+[package]
+name = "eighx-webui"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

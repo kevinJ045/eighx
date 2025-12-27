@@ -1,6 +1,11 @@
+use crate::widgets::Block;
+
 use super::Theme;
-use gpui::{App, Application, Context, Corner, Div, Hsla, Stateful, Window, WindowOptions, anchored, deferred, div, prelude::*, px, rgb, Global, Rgba, rgba};
 use gpui::private::serde_json;
+use gpui::{
+  App, Application, Context, Corner, Div, Global, Hsla, Rgba, Stateful, Window, WindowOptions,
+  anchored, deferred, div, prelude::*, px, rgb, rgba,
+};
 use serde::Serialize;
 
 struct AppTheme {
@@ -9,13 +14,14 @@ struct AppTheme {
 
 impl AppTheme {
   pub fn new() -> Self {
-    Self { inner: Theme::default() }
+    Self {
+      inner: Theme::default(),
+    }
   }
 
   pub fn with(theme: Theme) -> Self {
     Self { inner: theme }
   }
-
 }
 
 impl std::ops::Deref for AppTheme {
@@ -41,24 +47,24 @@ fn line(color: impl Into<Hsla>) -> Div {
 impl Render for HelloWorld {
   fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
     let theme = cx.global::<AppTheme>();
-    println!("{:?}", theme.primary);
     div()
       .flex()
       .flex_col()
       .gap_3()
       .size_full()
-      .bg(theme.base)
-      .text_color(theme.text)
+      .bg(theme.colors.base)
+      .text_color(theme.colors.text)
       .justify_center()
       .items_center()
       .child(
         "Here is an example text rendered, \
                 A few colors as well to test the global theme.",
       )
+      .child(Block::new())
       .children([
-        line(theme.primary),
-        line(theme.secondary),
-        line(theme.tertiary),
+        line(theme.colors.primary),
+        line(theme.colors.secondary),
+        line(theme.colors.tertiary),
       ])
   }
 }

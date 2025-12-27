@@ -1,8 +1,8 @@
-use serde::{Serialize, Deserialize};
-use gpui::{Rgba, rgba};
+use gpui::{Div, Rgba, Size, Styled, rgba};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Theme {
+pub struct ThemeColors {
   pub base: Rgba,
   pub crust: Rgba,
   pub mantle: Rgba,
@@ -25,7 +25,8 @@ pub struct Theme {
   pub warn: Rgba,
   pub info: Rgba,
 }
-impl Default for Theme {
+
+impl Default for ThemeColors {
   fn default() -> Self {
     Self {
       base: rgba(0x1e1e2eff),
@@ -50,5 +51,114 @@ impl Default for Theme {
       warn: rgba(0xf9e2afff),
       info: rgba(0x89b4faff),
     }
+  }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct BlockStyles {
+  pub rounding: f32,
+  pub border: f32,
+}
+
+impl Default for BlockStyles {
+  fn default() -> Self {
+    Self {
+      rounding: 0.0,
+      border: 0.0,
+    }
+  }
+}
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct ThemeStyles {
+  pub block: BlockStyles,
+}
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct Theme {
+  pub colors: ThemeColors,
+  pub styles: ThemeStyles,
+}
+
+impl<'a> Theme {
+  pub fn stylize<T>(elt: T, theme: &'a Theme) -> Stylizer<'a, T>
+  where
+    T: gpui::Element + gpui::Styled,
+  {
+    Stylizer { elt, theme }
+  }
+}
+
+impl Theme {
+  pub fn get_color(color: ThemeColor, theme: &Theme) -> Rgba {
+    use ThemeColor::*;
+    match color {
+      Crust => theme.colors.crust,
+      Base => theme.colors.base,
+      Mantle => theme.colors.mantle,
+      Primary => theme.colors.primary,
+      Secondary => theme.colors.secondary,
+      Tertiary => theme.colors.tertiary,
+    }
+  }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum ThemeColor {
+  Crust,
+  Base,
+  Mantle,
+  Primary,
+  Secondary,
+  Tertiary,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum ThemeBorder {
+  None,
+  Colored(ThemeColor),
+  Sized(ThemeColor, f32),
+}
+
+pub struct Stylizer<'a, T>
+where
+  T: gpui::Element + gpui::Styled,
+{
+  elt: T,
+  theme: &'a Theme,
+}
+
+impl<'a, T> Stylizer<'a, T>
+where
+  T: gpui::Element + gpui::Styled,
+{
+  pub fn bg(mut self, bg: ThemeColor) -> Self {
+    let color = Theme::get_color(bg, self.theme);
+    self.elt = self.elt.bg(color);
+
+    self
+  }
+
+  pub fn border(mut self, border: ThemeBorder, size: Option<f32>) -> Self {
+    use ThemeBorder::*;
+    let size = match border {
+      Sized(_, size) => size,
+      _ => size.unwrap_or(1.0),
+    };
+
+    match border {
+      None => {}
+      Colored(color) | Sized(color, _) => {
+        self.elt = self.elt.border(gpui::px(size));
+        let color = Theme::get_color(color, self.theme);
+        self.elt = self.elt.border_color(color);
+      }
+    }
+
+    self
+  }
+
+  pub fn into(self) -> T {
+    self.elt
   }
 }
